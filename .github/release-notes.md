@@ -1,3 +1,4 @@
+<!-- install-instructions:start -->
 ## Quick install
 
 Run these commands on the VPS that will host the container. Docker Engine and the Docker Compose v2 plugin must be installed on the VPS.
@@ -49,3 +50,4 @@ ssh -i ~/.ssh/agents-in-docker -p 2222 agent@VPS_ADDRESS
 The SSH session opens in `/workspaces`. Port `7777` is published for services started inside the container; those services must listen on `0.0.0.0:7777`.
 
 See the [README](https://github.com/sigmalko/agents-in-docker#readme) for all settings and troubleshooting.
+<!-- install-instructions:end -->

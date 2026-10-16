@@ -1,0 +1,42 @@
+name: Sync release installation instructions
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/release-notes.md
+      - .github/workflows/sync-release-notes.yaml
+
+permissions:
+  contents: write
+
+jobs:
+  sync-release-notes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - name: Update existing release descriptions
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          instructions="$(cat .github/release-notes.md)"
+          gh release list --repo "$REPOSITORY" --limit 100 --json tagName --jq '.[].tagName' |
+          while IFS= read -r tag; do
+            [[ -n "$tag" ]] || continue
+            previous_body="$(gh release view "$tag" --repo "$REPOSITORY" --json body --jq '.body // ""')"
+            historical_notes="$(printf '%s\n' "$previous_body" | awk '
+              /<!-- install-instructions:start -->/ { inside=1; next }
+              /<!-- install-instructions:end -->/ { inside=0; next }
+              !inside { print }
+            ')"
+            updated_body="$instructions"
+            if [[ -n "${historical_notes//[[:space:]]/}" ]]; then
+              updated_body+=$'\n\n---\n\n'"$historical_notes"
+            fi
+            gh release edit "$tag" --repo "$REPOSITORY" --notes "$updated_body"
+          done
