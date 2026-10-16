@@ -33,7 +33,7 @@ ssh VPS_USER@VPS_ADDRESS 'chmod 700 ~/agents-in-docker/.ssh && chmod 600 ~/agent
 
 ## Start and connect
 
-On the VPS, open TCP ports `2222` (SSH) and `7777` (services) in its firewall, then start the container:
+Compose binds SSH port `2222` and service port `7777` to `0.0.0.0` by default. Open TCP ports `2222` and `7777` in the VPS firewall or cloud security group, then start the container:
 
 ```bash
 cd ~/agents-in-docker

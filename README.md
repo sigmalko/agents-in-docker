@@ -101,7 +101,7 @@ The container listens on SSH port `22`; Compose publishes it as host port `2222`
 
 ## Port 7777
 
-Compose publishes container port `7777` on host port `7777` on all host interfaces. Open TCP `7777` in the VPS firewall or cloud security group to allow internet connections. The image leaves this port available for an agent-managed service. A service must listen on `0.0.0.0:7777` inside the container; binding to `127.0.0.1` will make it unreachable from outside.
+Compose explicitly binds container port `7777` to host port `7777` on `0.0.0.0`, which means all IPv4 interfaces on the host. Open TCP `7777` in the VPS firewall or cloud security group to allow internet connections. The image leaves this port available for an agent-managed service. A service must listen on `0.0.0.0:7777` inside the container; binding to `127.0.0.1` will make it unreachable from outside. SSH is bound the same way on host port `2222` by default.
 
 For example, start a small Node.js HTTP service in an SSH session:
 
