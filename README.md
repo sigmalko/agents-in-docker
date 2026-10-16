@@ -4,6 +4,37 @@ A Docker Compose environment for running coding agents over SSH. The published i
 
 GitHub Actions builds the image and publishes it to `ghcr.io/sigmalko/agents-in-docker`. The Compose setup pulls that image; it does not build locally.
 
+## Quick start
+
+On a VPS with Docker Compose installed, create a deployment directory and download the Compose file and environment template:
+
+```bash
+mkdir -p ~/agents-in-docker/.ssh
+cd ~/agents-in-docker
+curl -fsSLO https://raw.githubusercontent.com/sigmalko/agents-in-docker/main/docker-compose.yml
+curl -fsSLO https://raw.githubusercontent.com/sigmalko/agents-in-docker/main/.env.example
+cp .env.example .env
+```
+
+Create an SSH key pair on your computer and copy only its **public** key to the VPS:
+
+```bash
+ssh-keygen -t ed25519 -f ~/.ssh/agents-in-docker -C agents-in-docker
+install -m 600 ~/.ssh/agents-in-docker.pub ~/agents-in-docker/.ssh/authorized_keys
+```
+
+Edit `.env`: set `GH_TOKEN` and `AGENT_REPOSITORY` (defaults to `sigmalko/Cracow`). `GHCR_TOKEN` is only needed if the image is private. Keep `.env` and your SSH private key out of Git.
+
+Start the container and connect from your computer:
+
+```bash
+docker compose pull
+docker compose up -d
+ssh -i ~/.ssh/agents-in-docker -p 2222 agent@VPS_ADDRESS
+```
+
+Open TCP ports `2222` (SSH) and `7777` (services) in the VPS firewall. The SSH session starts in `/workspaces`. See [Start from GHCR](#start-from-ghcr) for key setup and configuration details.
+
 ## Requirements
 
 - Docker Engine and the Docker Compose v2 plugin on the VPS;
