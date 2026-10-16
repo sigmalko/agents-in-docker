@@ -13,7 +13,7 @@ services:
       - "${SSH_PORT:-2222}:22"
       - "${SERVICE_PORT:-7777}:7777"
     volumes:
-      - agent-workspace:/workspace
+      - agent-workspace:/workspaces
       - agent-codex-config:/home/agent/.codex
       - agent-claude-config:/home/agent/.claude
       - "${SSH_AUTHORIZED_KEYS:-./.ssh/authorized_keys}:/home/agent/.ssh/authorized_keys:ro"

@@ -83,7 +83,7 @@ Then visit `http://VPS_ADDRESS:7777` or test with `curl http://VPS_ADDRESS:7777`
 Compose passes `GH_TOKEN` and `AGENT_REPOSITORY` into the container. `gh` uses `GH_TOKEN` automatically for GitHub authentication. After connecting over SSH, clone the configured repository into the persistent workspace with:
 
 ```bash
-gh repo clone "$AGENT_REPOSITORY" "/workspace/${AGENT_REPOSITORY##*/}"
+gh repo clone "$AGENT_REPOSITORY" "/workspaces/${AGENT_REPOSITORY##*/}"
 ```
 
 `GHCR_TOKEN` is also available in the container for scripts that need it. The container has no Docker client or Docker daemon.
@@ -105,7 +105,7 @@ GHCR_USERNAME=sigmalko
 AGENT_REPOSITORY=sigmalko/Cracow
 ```
 
-The Compose service uses named volumes for `/workspace` and the Codex and Claude Code configuration directories, so work files and CLI authentication survive container replacement. Connect over SSH and use `/workspace` for agent work. To mount a host directory instead, replace the `agent-workspace:/workspace` entry in Compose with an absolute host path such as `/srv/agent-workspace:/workspace`.
+The Compose service uses named volumes for `/workspaces` and the Codex and Claude Code configuration directories, so work files and CLI authentication survive container replacement. SSH sessions start in `/workspaces`. To mount a host directory instead, replace the `agent-workspace:/workspaces` entry in Compose with an absolute host path such as `/srv/agent-workspace:/workspaces`.
 
 ## CLI updates and cron
 

@@ -48,7 +48,7 @@ RUN set -eu; \
 RUN usermod --login agent --home /home/agent --move-home node \
     && groupmod --new-name agent node \
     && passwd --delete agent \
-    && install -d -o agent -g agent -m 0700 /home/agent/.ssh /home/agent/.npm-global /workspace \
+    && install -d -o agent -g agent -m 0700 /home/agent/.ssh /home/agent/.npm-global /workspaces \
     && install -d -m 0755 /var/lib/ssh-host-keys /run/sshd
 
 # Install both agent CLIs as the SSH user, without requiring root at runtime.
@@ -80,7 +80,7 @@ RUN chmod 0755 /usr/local/sbin/docker-entrypoint /usr/local/sbin/update-agent-cl
     && tmux -V \
     && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /workspace
+WORKDIR /workspaces
 EXPOSE 22 7777
-VOLUME ["/workspace"]
+VOLUME ["/workspaces"]
 ENTRYPOINT ["/usr/local/sbin/docker-entrypoint"]

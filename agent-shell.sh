@@ -7,4 +7,5 @@ if [[ -r /run/agent-environment ]]; then
     source /run/agent-environment
 fi
 
+cd /workspaces
 exec /bin/bash "$@"
