@@ -1,6 +1,11 @@
 FROM node:current-trixie-slim
 
-LABEL org.opencontainers.image.source="https://github.com/sigmalko/agents-in-docker"
+LABEL org.opencontainers.image.title="agents-in-docker" \
+    org.opencontainers.image.description="Run OpenAI Codex and Claude Code in a persistent Docker Compose container over SSH." \
+    org.opencontainers.image.url="https://github.com/sigmalko/agents-in-docker" \
+    org.opencontainers.image.documentation="https://github.com/sigmalko/agents-in-docker#readme" \
+    org.opencontainers.image.source="https://github.com/sigmalko/agents-in-docker" \
+    org.opencontainers.image.vendor="sigmalko"
 
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Europe/Warsaw \
