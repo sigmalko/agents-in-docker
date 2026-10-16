@@ -1,5 +1,7 @@
 FROM node:current-trixie-slim
 
+LABEL org.opencontainers.image.source="https://github.com/sigmalko/agents-in-docker"
+
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Europe/Warsaw \
     NPM_CONFIG_PREFIX=/home/agent/.npm-global \
