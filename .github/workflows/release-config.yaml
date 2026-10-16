@@ -22,9 +22,10 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RELEASE_TAG: ${{ github.ref_name }}
         run: |
+          cp .env.example "$RUNNER_TEMP/env.example"
           gh release create "$RELEASE_TAG" \
             docker-compose.yml \
-            .env.example \
+            "$RUNNER_TEMP/env.example" \
             --repo "$GITHUB_REPOSITORY" \
             --title "$RELEASE_TAG" \
             --generate-notes

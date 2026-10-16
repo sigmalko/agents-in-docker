@@ -12,7 +12,7 @@ On a VPS with Docker Compose installed, create a deployment directory and downlo
 mkdir -p ~/agents-in-docker/.ssh
 cd ~/agents-in-docker
 curl -fsSLO https://github.com/sigmalko/agents-in-docker/releases/latest/download/docker-compose.yml
-curl -fsSLO https://github.com/sigmalko/agents-in-docker/releases/latest/download/.env.example
+curl -fsSL https://github.com/sigmalko/agents-in-docker/releases/latest/download/env.example -o .env.example
 cp .env.example .env
 ```
 
@@ -51,7 +51,7 @@ Create a directory on the VPS and download the two configuration files attached 
 mkdir -p ~/agents-in-docker/.ssh
 cd ~/agents-in-docker
 curl -fsSLO https://github.com/sigmalko/agents-in-docker/releases/latest/download/docker-compose.yml
-curl -fsSLO https://github.com/sigmalko/agents-in-docker/releases/latest/download/.env.example
+curl -fsSL https://github.com/sigmalko/agents-in-docker/releases/latest/download/env.example -o .env.example
 cp .env.example .env
 ```
 
