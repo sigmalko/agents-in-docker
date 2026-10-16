@@ -9,6 +9,8 @@ services:
       GHCR_TOKEN: ${GHCR_TOKEN:-}
       GHCR_USERNAME: ${GHCR_USERNAME:-sigmalko}
       AGENT_REPOSITORY: ${AGENT_REPOSITORY:-sigmalko/Cracow}
+      GIT_USER_NAME: ${GIT_USER_NAME:-lingmine[bot]}
+      GIT_USER_EMAIL: ${GIT_USER_EMAIL:-188585048+sigmalko@users.noreply.github.com}
     ports:
       - "${SSH_PORT:-2222}:22"
       - "${SERVICE_PORT:-7777}:7777"

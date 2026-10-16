@@ -5,6 +5,9 @@ readonly authorized_keys=/home/agent/.ssh/authorized_keys
 readonly host_key_dir=/var/lib/ssh-host-keys
 readonly session_environment=/run/agent-environment
 
+runuser -u agent -- env HOME=/home/agent git config --global user.name "${GIT_USER_NAME:-lingmine[bot]}"
+runuser -u agent -- env HOME=/home/agent git config --global user.email "${GIT_USER_EMAIL:-188585048+sigmalko@users.noreply.github.com}"
+
 if [[ ! -f "${authorized_keys}" || ! -s "${authorized_keys}" ]]; then
     echo "SSH public keys are missing. Mount a non-empty authorized_keys file at ${authorized_keys}." >&2
     exit 1

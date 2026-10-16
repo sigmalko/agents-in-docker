@@ -28,4 +28,5 @@ jobs:
             "$RUNNER_TEMP/env.example" \
             --repo "$GITHUB_REPOSITORY" \
             --title "$RELEASE_TAG" \
+            --notes "$(cat .github/release-notes.md)" \
             --generate-notes

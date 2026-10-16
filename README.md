@@ -66,6 +66,8 @@ If you already have an SSH public key, copy that public key into `~/agents-in-do
 
 Edit `.env` and set `GH_TOKEN` to a GitHub token that can access the repositories you want the agents to use. `AGENT_REPOSITORY` defaults to `sigmalko/Cracow` and can be changed to another `OWNER/REPOSITORY`. `GHCR_TOKEN` and `GHCR_USERNAME` are for authenticating the VPS host to GHCR when the image is private; `GHCR_TOKEN` needs `read:packages` access. The `.env` file is ignored by Git and is mounted into the container as environment variables by Compose.
 
+`GIT_USER_NAME` and `GIT_USER_EMAIL` set the global Git author identity for the `agent` account. They default to `lingmine[bot]` and `188585048+sigmalko@users.noreply.github.com`.
+
 For a private GHCR image, log in on the VPS before pulling:
 
 ```bash
@@ -134,6 +136,8 @@ GH_TOKEN=replace_with_github_token
 GHCR_TOKEN=replace_with_ghcr_token
 GHCR_USERNAME=sigmalko
 AGENT_REPOSITORY=sigmalko/Cracow
+GIT_USER_NAME=lingmine[bot]
+GIT_USER_EMAIL=188585048+sigmalko@users.noreply.github.com
 ```
 
 The Compose service uses named volumes for `/workspaces` and the Codex and Claude Code configuration directories, so work files and CLI authentication survive container replacement. SSH sessions start in `/workspaces`. To mount a host directory instead, replace the `agent-workspace:/workspaces` entry in Compose with an absolute host path such as `/srv/agent-workspace:/workspaces`.
@@ -165,7 +169,7 @@ The Compose file only pulls the published image. To build and test locally, run 
 
 ## Configuration releases
 
-Each GitHub Release includes `docker-compose.yml` and `.env.example` as downloadable assets. The stable download links above always point to the latest release. To publish a new configuration release, push a version tag such as `v1.0.0`; GitHub Actions creates the release and attaches both files automatically:
+Each GitHub Release includes `docker-compose.yml` and `env.example` (downloaded as `.env.example` by the setup commands). The stable download links above always point to the latest release. To publish a new configuration release, push a version tag such as `v1.0.0`; GitHub Actions creates the release, adds installation instructions, and attaches both files automatically:
 
 ```bash
 git tag v1.0.0
