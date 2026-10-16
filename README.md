@@ -11,8 +11,8 @@ On a VPS with Docker Compose installed, create a deployment directory and downlo
 ```bash
 mkdir -p ~/agents-in-docker/.ssh
 cd ~/agents-in-docker
-curl -fsSLO https://raw.githubusercontent.com/sigmalko/agents-in-docker/main/docker-compose.yml
-curl -fsSLO https://raw.githubusercontent.com/sigmalko/agents-in-docker/main/.env.example
+curl -fsSLO https://github.com/sigmalko/agents-in-docker/releases/latest/download/docker-compose.yml
+curl -fsSLO https://github.com/sigmalko/agents-in-docker/releases/latest/download/.env.example
 cp .env.example .env
 ```
 
@@ -45,13 +45,13 @@ Docker must be installed on the VPS host. It is not installed inside the agent c
 
 ## Start from GHCR
 
-Create a directory on the VPS and put these two files in it: `docker-compose.yml` from this repository and a local `.env` based on `.env.example`.
+Create a directory on the VPS and download the two configuration files attached to the latest GitHub Release:
 
 ```bash
 mkdir -p ~/agents-in-docker/.ssh
 cd ~/agents-in-docker
-curl -fsSLO https://raw.githubusercontent.com/sigmalko/agents-in-docker/main/docker-compose.yml
-curl -fsSLO https://raw.githubusercontent.com/sigmalko/agents-in-docker/main/.env.example
+curl -fsSLO https://github.com/sigmalko/agents-in-docker/releases/latest/download/docker-compose.yml
+curl -fsSLO https://github.com/sigmalko/agents-in-docker/releases/latest/download/.env.example
 cp .env.example .env
 ```
 
@@ -162,3 +162,12 @@ docker compose up -d
 ```
 
 The Compose file only pulls the published image. To build and test locally, run `docker build -t agents-in-docker .` from the repository root.
+
+## Configuration releases
+
+Each GitHub Release includes `docker-compose.yml` and `.env.example` as downloadable assets. The stable download links above always point to the latest release. To publish a new configuration release, push a version tag such as `v1.0.0`; GitHub Actions creates the release and attaches both files automatically:
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
