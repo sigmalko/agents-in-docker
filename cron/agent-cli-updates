@@ -1,0 +1,2 @@
+# Update agent CLIs daily at 04:00 in the container timezone.
+0 4 * * * root /usr/local/sbin/update-agent-clis >> /var/log/agent-cli-updates.log 2>&1
