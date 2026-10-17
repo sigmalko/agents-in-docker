@@ -99,6 +99,12 @@ The container accepts public-key authentication only. Password authentication an
 
 The container listens on SSH port `22`; Compose publishes it as host port `2222` by default. Change `SSH_PORT` in `.env` to use a different host port, and open that port in the VPS firewall.
 
+The login shell loads the container's runtime environment after Bash startup files, so SSH clients that start a login shell can find the installed CLIs. To verify this inside the container, run:
+
+```bash
+/usr/local/bin/agent-shell -l -i -c 'command -v codex && codex --version'
+```
+
 ## Port 7777
 
 Compose explicitly binds container port `7777` to host port `7777` on `0.0.0.0`, which means all IPv4 interfaces on the host. Open TCP `7777` in the VPS firewall or cloud security group to allow internet connections. The image leaves this port available for an agent-managed service. A service must listen on `0.0.0.0:7777` inside the container; binding to `127.0.0.1` will make it unreachable from outside. SSH is bound the same way on host port `2222` by default.
