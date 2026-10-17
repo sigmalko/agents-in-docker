@@ -68,6 +68,21 @@ Edit `.env` and set `GH_TOKEN` to a GitHub token that can access the repositorie
 
 `GIT_USER_NAME` and `GIT_USER_EMAIL` set the global Git author identity for the `agent` account. They default to `lingmine[bot]` and `188585048+sigmalko@users.noreply.github.com`.
 
+### Git author identity
+
+At container startup, the entrypoint writes `GIT_USER_NAME` and `GIT_USER_EMAIL` from `.env` to the `agent` account's global Git configuration. They configure Git commits; they are not exported into the SSH login shell environment. Check the configured values from an SSH session with:
+
+```bash
+git config --global --get user.name
+git config --global --get user.email
+```
+
+To see the source file and all global settings, run:
+
+```bash
+git config --global --list --show-origin
+```
+
 For a private GHCR image, log in on the VPS before pulling:
 
 ```bash
