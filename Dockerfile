@@ -70,10 +70,15 @@ COPY sshd_config /etc/ssh/sshd_config
 COPY docker-entrypoint.sh /usr/local/sbin/docker-entrypoint
 COPY agent-shell.sh /usr/local/bin/agent-shell
 COPY .bash_profile /home/agent/.bash_profile
+COPY codex-alias.bashrc /tmp/agent-codex-alias.bashrc
 COPY scripts/update-agent-clis.sh /usr/local/sbin/update-agent-clis
 COPY cron/agent-cli-updates /etc/cron.d/agent-cli-updates
 
 RUN chmod 0755 /usr/local/sbin/docker-entrypoint /usr/local/sbin/update-agent-clis /usr/local/bin/agent-shell \
+    && touch /home/agent/.bashrc \
+    && cat /tmp/agent-codex-alias.bashrc >> /home/agent/.bashrc \
+    && rm /tmp/agent-codex-alias.bashrc \
+    && chown agent:agent /home/agent/.bashrc \
     && usermod --shell /usr/local/bin/agent-shell agent \
     && printf '%s\n' /usr/local/bin/agent-shell >> /etc/shells \
     && chmod 0644 /etc/cron.d/agent-cli-updates \
