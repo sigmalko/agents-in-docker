@@ -15,15 +15,9 @@ services:
       - "0.0.0.0:${SSH_PORT:-2222}:22"
       - "0.0.0.0:${SERVICE_PORT:-7777}:7777"
     volumes:
-      - agent-workspace:/workspaces
-      - agent-codex-config:/home/agent/.codex
-      - agent-claude-config:/home/agent/.claude
       - "${SSH_AUTHORIZED_KEYS:-./.ssh/authorized_keys}:/home/agent/.ssh/authorized_keys:ro"
       - agent-ssh-host-keys:/var/lib/ssh-host-keys
     init: true
 
 volumes:
-  agent-workspace:
-  agent-codex-config:
-  agent-claude-config:
   agent-ssh-host-keys:

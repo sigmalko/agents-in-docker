@@ -119,7 +119,7 @@ Then visit `http://VPS_ADDRESS:7777` or test with `curl http://VPS_ADDRESS:7777`
 
 ## Clone the configured repository
 
-Compose passes `GH_TOKEN` and `AGENT_REPOSITORY` into the container. `gh` uses `GH_TOKEN` automatically for GitHub authentication. After connecting over SSH, clone the configured repository into the persistent workspace with:
+Compose passes `GH_TOKEN` and `AGENT_REPOSITORY` into the container. `gh` uses `GH_TOKEN` automatically for GitHub authentication. After connecting over SSH, clone the configured repository into the container's temporary workspace with:
 
 ```bash
 gh repo clone "$AGENT_REPOSITORY" "/workspaces/${AGENT_REPOSITORY##*/}"
@@ -146,7 +146,7 @@ GIT_USER_NAME=lingmine[bot]
 GIT_USER_EMAIL=188585048+sigmalko@users.noreply.github.com
 ```
 
-The Compose service uses named volumes for `/workspaces` and the Codex and Claude Code configuration directories, so work files and CLI authentication survive container replacement. SSH sessions start in `/workspaces`. To mount a host directory instead, replace the `agent-workspace:/workspaces` entry in Compose with an absolute host path such as `/srv/agent-workspace:/workspaces`.
+The container is intended to be ephemeral and only last for the agent's work session. The workspace at `/workspaces` and Codex and Claude Code configuration (including CLI authentication) live in the container filesystem and are lost when the container is removed or recreated. Save work outside the container when it needs to survive. The only named volume is `agent-ssh-host-keys`, which preserves the SSH server identity across recreation. Avoid mounting persistent workspace or CLI configuration directories: limiting persistent mounted data reduces the chance that a compromised container can read or alter data that outlives it. SSH sessions start in `/workspaces`.
 
 ## CLI updates and cron
 
@@ -158,7 +158,7 @@ docker compose exec agent codex --version
 docker compose exec agent claude --version
 ```
 
-The CLIs are installed at the latest version available when the image is built, then refreshed by cron. Authenticate each CLI from the SSH session using its normal interactive login flow. Their configuration and authentication data persist in named volumes.
+The CLIs are installed at the latest version available when the image is built, then refreshed by cron. Authenticate each CLI from the SSH session using its normal interactive login flow. Their configuration and authentication data remain in the container filesystem and are lost when the container is removed or recreated.
 
 ## Image tags and publishing
 
