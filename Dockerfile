@@ -69,6 +69,7 @@ USER root
 COPY sshd_config /etc/ssh/sshd_config
 COPY docker-entrypoint.sh /usr/local/sbin/docker-entrypoint
 COPY agent-shell.sh /usr/local/bin/agent-shell
+COPY .bash_profile /home/agent/.bash_profile
 COPY scripts/update-agent-clis.sh /usr/local/sbin/update-agent-clis
 COPY cron/agent-cli-updates /etc/cron.d/agent-cli-updates
 
