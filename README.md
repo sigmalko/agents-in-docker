@@ -162,7 +162,7 @@ The CLIs are installed at the latest version available when the image is built, 
 
 ## Image tags and publishing
 
-GitHub Actions builds on pull requests without publishing. Pushes to `main` publish `latest`, a numbered tag, and a commit SHA tag to GHCR. You can select another published tag by changing `IMAGE` in `.env`.
+Pull requests do not build the image. Pushes to `main` publish `latest`, a numbered tag, and a commit SHA tag to GHCR. Version tags whose commits are part of `main` also publish semantic-version image tags. You can select another published tag by changing `IMAGE` in `.env`.
 
 To refresh the running container after a new image is published:
 
@@ -175,7 +175,7 @@ The Compose file only pulls the published image. To build and test locally, run 
 
 ## Configuration releases
 
-Each GitHub Release includes `docker-compose.yml` and `env.example` (downloaded as `.env.example` by the setup commands). The stable download links above always point to the latest release. To publish a new configuration release, push a version tag such as `v1.0.0`; GitHub Actions creates the release, adds installation instructions, and attaches both files automatically:
+Each GitHub Release includes `docker-compose.yml` and `env.example` (downloaded as `.env.example` by the setup commands). The stable download links above always point to the latest release. To publish a new configuration release, push a version tag such as `v1.0.0` that points to a commit on `main`; GitHub Actions creates the release, adds installation instructions, and attaches both files automatically:
 
 ```bash
 git tag v1.0.0
