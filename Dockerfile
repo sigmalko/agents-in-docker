@@ -98,5 +98,4 @@ RUN chmod 0755 /usr/local/sbin/docker-entrypoint /usr/local/sbin/update-agent-cl
 
 WORKDIR /workspaces
 EXPOSE 22 7777
-VOLUME ["/workspaces"]
 ENTRYPOINT ["/usr/local/sbin/docker-entrypoint"]
