@@ -16,6 +16,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
+        bubblewrap \
         curl \
         cron \
         git \
@@ -91,6 +92,7 @@ RUN chmod 0755 /usr/local/sbin/docker-entrypoint /usr/local/sbin/update-agent-cl
     && git --version \
     && gh --version \
     && glab --version \
+    && bwrap --version \
     && jq --version \
     && curl --version \
     && tmux -V \

@@ -1,6 +1,8 @@
 # agents-in-docker
 
-A Docker Compose environment for running coding agents over SSH. The published image includes the current Node.js release, OpenAI Codex CLI, Claude Code, Git, GitHub CLI (`gh`), GitLab CLI (`glab`), `jq`, `curl`, `tmux`, `sshd`, and cron. It does not install Python or Docker.
+A Docker Compose environment for running coding agents over SSH. The published image includes the current Node.js release, OpenAI Codex CLI, Claude Code, bubblewrap (`bwrap`), Git, GitHub CLI (`gh`), GitLab CLI (`glab`), `jq`, `curl`, `tmux`, `sshd`, and cron. It does not install Python or Docker.
+
+Codex uses `bwrap` for its Linux sandbox. The image includes the executable, but creating namespaces can also depend on the Docker host and runtime configuration. If Codex reports `bwrap: No permissions to create a new namespace`, check that the container runtime permits namespace creation.
 
 GitHub Actions builds the image and publishes it to `ghcr.io/sigmalko/agents-in-docker`. The Compose setup pulls that image; it does not build locally.
 
